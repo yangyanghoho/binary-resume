@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary Portfolio | 个人主页</title>
+    <style>
+        /* ===== CSS Variables ===== */
+        :root {
+            --primary: #00ff41;
+            --primary-dim: #00cc33;
+            --secondary: #0affef;
+            --accent: #ff0080;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-card-hover: #1a1a1a;
+            --text: #e0e0e0;
+            --text-dim: #888888;
+            --border: #222222;
+            --glow: 0 0 10px rgba(0, 255, 65, 0.3);
+            --font-mono: 'Courier New', 'Consolas', monospace;
+        }
+
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-mono);
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ===== Binary Background Animation ===== */
+        .binary-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.06;
+            overflow: hidden;
+        }
+
+        .binary-column {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: var(--primary);
+            animation: fall linear infinite;
+            white-space: nowrap;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(calc(100vh + 100%)); }
+        }
+
+        /* ===== Navigation ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        nav .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        nav .logo::before {
+            content: '> ';
+            color: var(--accent);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s, text-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        /* ===== Main Content ===== */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+        }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 4rem;
+        }
+
+        .hero-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+            box-shadow: var(--glow), 0 0 30px rgba(0, 255, 65, 0.1);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            background: var(--bg-card);
+            font-size: 2.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-shadow: var(--glow);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1::before {
+            content: '0x';
+            color: var(--accent);
+            font-size: 1.5rem;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .hero .bio {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .hero .bio::before {
+            content: '// ';
+            color: var(--text-dim);
+        }
+
+        /* ===== Section Styles ===== */
+        section {
+            margin-bottom: 4rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            text-shadow: var(--glow);
+        }
+
+        .section-header h2::before {
+            content: '$ ';
+            color: var(--accent);
+        }
+
+        .section-header .binary-tag {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            opacity: 0.5;
+        }
+
+        /* ===== Cards ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .card:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--primary-dim);
+            box-shadow: var(--glow);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            color: var(--secondary);
+        }
+
+        .card-date {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+        }
+
+        .card-date::before {
+            content: '[';
+            color: var(--accent);
+        }
+
+        .card-date::after {
+            content: ']';
+            color: var(--accent);
+        }
+
+        .card-subtitle {
+            font-size: 0.9rem;
+            color: var(--primary-dim);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .card-desc li {
+            margin-bottom: 0.3rem;
+            list-style: none;
+        }
+
+        .card-desc li::before {
+            content: '├─ ';
+            color: var(--primary-dim);
+        }
+
+        .card-desc li:last-child::before {
+            content: '└─ ';
+            color: var(--primary-dim);
+        }
+
+        /* ===== Tags ===== */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--primary);
+            background: rgba(0, 255, 65, 0.05);
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            border-color: var(--primary);
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: var(--glow);
+        }
+
+        /* ===== Info Grid ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .info-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .info-item:hover {
+            border-color: var(--primary-dim);
+            box-shadow: var(--glow);
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.3rem;
+        }
+
+        .info-label::before {
+            content: '# ';
+            color: var(--accent);
+        }
+
+        .info-value {
+            font-size: 0.95rem;
+            color: var(--secondary);
+        }
+
+        /* ===== Skills ===== */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-category h3 {
+            font-size: 0.9rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .skill-category h3::before {
+            content: '> ';
+            color: var(--accent);
+        }
+
+        .skill-bar {
+            margin-bottom: 0.6rem;
+        }
+
+        .skill-name {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.2rem;
+        }
+
+        .skill-progress {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+            transition: width 1s ease;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+        }
+
+        footer .binary-footer {
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            opacity: 0.4;
+            word-break: break-all;
+        }
+
+        /* ===== Scrollbar ===== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dim);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav ul li a {
+                font-size: 0.75rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 5rem 1rem 3rem;
+            }
+
+            .card-header {
+                flex-direction: column;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav .nav-inner {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            nav ul {
+                gap: 0.8rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== Animation ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Binary Rain Background -->
+    <div class="binary-bg" id="binaryBg" aria-hidden="true"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">Binary_Portfolio</div>
+            <ul>
+                <li><a href="#about">关于</a></li>
+                <li><a href="#education">教育</a></li>
+                <li><a href="#career">履历</a></li>
+                <li><a href="#projects">项目</a></li>
+                <li><a href="#skills">技能</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="about">
+            <div class="hero-avatar">👤</div>
+            <h1>Your_Name</h1>
+            <p class="subtitle">Full-Stack Developer | System Architect</p>
+            <p class="bio">热爱用代码构建数字世界，专注于高性能系统设计与前沿技术探索。</p>
+        </section>
+
+        <!-- Personal Info -->
+        <section class="fade-in">
+            <div class="section-header">
+                <h2>个人信息</h2>
+                <span class="binary-tag">01110000 01100101 01110010 01110011 01101111 01101110</span>
+            </div>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">姓名</div>
+                    <div class="info-value">Your Name</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">位置</div>
+                    <div class="info-value">中国 · 北京</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">邮箱</div>
+                    <div class="info-value">your.email@example.com</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">GitHub</div>
+                    <div class="info-value">github.com/yourname</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">状态</div>
+                    <div class="info-value">🟢 Open to Opportunities</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">语言</div>
+                    <div class="info-value">中文 / English</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="fade-in">
+            <div class="section-header">
+                <h2>教育经历</h2>
+                <span class="binary-tag">01100101 01100100 01110101</span>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">XX 大学</span>
+                    <span class="card-date">2016.09 - 2020.06</span>
+                </div>
+                <div class="card-subtitle">计算机科学与技术 · 本科</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>GPA: 3.8/4.0，专业排名前 5%</li>
+                        <li>获得国家奖学金、优秀毕业生等荣誉</li>
+                        <li>本科毕业设计：基于深度学习的图像识别系统</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">XX 大学</span>
+                    <span class="card-date">2020.09 - 2023.06</span>
+                </div>
+                <div class="card-subtitle">软件工程 · 硕士</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>研究方向：分布式系统与云原生架构</li>
+                        <li>发表 SCI/EI 论文 3 篇</li>
+                        <li>参与国家级科研项目 2 项</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career -->
+        <section id="career" class="fade-in">
+            <div class="section-header">
+                <h2>职业履历</h2>
+                <span class="binary-tag">01100011 01100001 01110010 01100101 01100101 01110010</span>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">XX 科技有限公司</span>
+                    <span class="card-date">2023.07 - 至今</span>
+                </div>
+                <div class="card-subtitle">高级后端工程师</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>负责核心交易系统的架构设计与性能优化</li>
+                        <li>主导微服务拆分，系统 QPS 提升 300%</li>
+                        <li>建立团队 Code Review 规范与 CI/CD 流水线</li>
+                        <li>指导初级开发者，推动团队技术成长</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag">Go</span>
+                    <span class="tag">Kubernetes</span>
+                    <span class="tag">gRPC</span>
+                    <span class="tag">PostgreSQL</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">XX 互联网公司</span>
+                    <span class="card-date">2021.06 - 2023.06</span>
+                </div>
+                <div class="card-subtitle">全栈开发工程师</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>开发并维护面向百万用户的 SaaS 平台</li>
+                        <li>设计实现实时数据分析 Dashboard</li>
+                        <li>优化前端性能，首屏加载时间降低 60%</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">Node.js</span>
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">MongoDB</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="fade-in">
+            <div class="section-header">
+                <h2>项目经验</h2>
+                <span class="binary-tag">01110000 01110010 01101111 01101010</span>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">分布式任务调度平台</span>
+                    <span class="card-date">2024</span>
+                </div>
+                <div class="card-subtitle">Tech Lead · 核心开发</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>基于 Go 实现的高可用分布式任务调度系统</li>
+                        <li>支持 DAG 工作流编排、动态资源分配</li>
+                        <li>日均调度任务 500 万+，P99 延迟 < 50ms</li>
+                        <li>采用 Raft 一致性协议保证集群状态一致</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag">Go</span>
+                    <span class="tag">etcd</span>
+                    <span class="tag">Raft</span>
+                    <span class="tag">Docker</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">实时协作文档编辑器</span>
+                    <span class="card-date">2023</span>
+                </div>
+                <div class="card-subtitle">全栈开发</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>基于 CRDT 算法实现无冲突实时协同编辑</li>
+                        <li>WebSocket 长连接支持多人同时在线编辑</li>
+                        <li>富文本编辑器，支持 Markdown、代码高亮</li>
+                        <li>支持离线编辑与自动同步</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag">TypeScript</span>
+                    <span class="tag">WebSocket</span>
+                    <span class="tag">CRDT</span>
+                    <span class="tag">Redis</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">智能运维监控系统</span>
+                    <span class="card-date">2022</span>
+                </div>
+                <div class="card-subtitle">后端开发</div>
+                <div class="card-desc">
+                    <ul>
+                        <li>基于时序数据库的全链路监控平台</li>
+                        <li>AI 驱动的异常检测与根因分析</li>
+                        <li>自定义告警规则引擎，支持多渠道通知</li>
+                        <li>覆盖 2000+ 服务节点的监控管理</li>
+                    </ul>
+                </div>
+                <div class="tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">InfluxDB</span>
+                    <span class="tag">Grafana</span>
+                    <span class="tag">Kafka</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section id="skills" class="fade-in">
+            <div class="section-header">
+                <h2>技术栈</h2>
+                <span class="binary-tag">01110011 01101011 01101001 01101100 01101100</span>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>后端开发</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Go</span><span>95%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 95%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Python</span><span>85%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Java</span><span>80%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 80%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>前端开发</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>React</span><span>90%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>TypeScript</span><span>88%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 88%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Vue.js</span><span>75%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 75%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>基础设施</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Kubernetes</span><span>90%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>AWS</span><span>85%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 85%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Docker</span><span>92%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 92%"></div></div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3>数据库</h3>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>PostgreSQL</span><span>88%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 88%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>Redis</span><span>90%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 90%"></div></div>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-name"><span>MongoDB</span><span>78%</span></div>
+                        <div class="skill-progress"><div class="skill-progress-fill" style="width: 78%"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&lt;/&gt; Crafted with binary passion · 2024</p>
+        <p class="binary-footer">01000011 01101111 01100100 01100101 00100000 01101001 01110011 00100000 01110000 01101111 01100101 01110100 01110010 01111001</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Binary Rain Effect
+        function createBinaryRain() {
+            const bg = document.getElementById('binaryBg');
+            const columns = Math.floor(window.innerWidth / 30);
+
+            for (let i = 0; i < columns; i++) {
+                const col = document.createElement('div');
+                col.className = 'binary-column';
+                col.style.left = `${(i / columns) * 100}%`;
+                col.style.animationDuration = `${8 + Math.random() * 12}s`;
+                col.style.animationDelay = `${Math.random() * 5}s`;
+
+                let text = '';
+                const length = 20 + Math.floor(Math.random() * 30);
+                for (let j = 0; j < length; j++) {
+                    text += Math.random() > 0.5 ? '1' : '0';
+                    if (j % 4 === 3) text += '\n';
+                }
+                col.textContent = text;
+                bg.appendChild(col);
+            }
+        }
+
+        // Scroll Fade-In Animation
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBinaryRain();
+            handleScrollAnimation();
+        });
+
+        // Responsive binary rain on resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                const bg = document.getElementById('binaryBg');
+                bg.innerHTML = '';
+                createBinaryRain();
+            }, 300);
+        });
+    </script>
+</body>
+</html>
