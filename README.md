@@ -1,2 +1,2 @@
-# binary-resume
-A simple binary style resume 
+# resume
+A simple resume 
