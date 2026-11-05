@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yang · 网络工程师 · Personal Portfolio</title>
+<meta name="description" content="Yang 的个人简历：网络工程师与解决方案架构师，专注通信核心网。">
+<meta name="theme-color" content="#0a0b0d">
+<link rel="canonical" href="https://yangzai.uno/">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Yang · Network Engineer · Personal Portfolio">
+<meta property="og:description" content="Network Engineer and Solution Architect working on telecom core networks.">
+<meta property="og:url" content="https://yangzai.uno/">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%2310b981'/%3E%3Ctext x='12' y='17' font-family='system-ui,sans-serif' font-size='14' font-weight='700' fill='%23fff' text-anchor='middle'%3EY%3C/text%3E%3C/svg%3E">
+
+<script>
+  // 首帧前确定主题与语言，避免闪烁
+  try {
+    var t = localStorage.getItem('yzr:theme');
+    if (!t) t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    document.documentElement.dataset.theme = t;
+
+    var q = new URLSearchParams(location.search).get('lang');
+    var l = q || localStorage.getItem('yzr:lang');
+    if (l !== 'zh' && l !== 'en') {
+      l = (navigator.language || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    }
+    document.documentElement.lang = l === 'en' ? 'en' : 'zh-CN';
+
+    // 首帧就把标题和描述换成对应语言，避免标签页闪中文
+    document.title = l === 'en'
+      ? 'Yang · Network Engineer · Personal Portfolio'
+      : 'Yang · 网络工程师 · Personal Portfolio';
+    var d = document.querySelector('meta[name="description"]');
+    if (d) d.setAttribute('content', l === 'en'
+      ? 'Resume of Yang, a network engineer and solution architect working on telecom core networks.'
+      : 'Yang 的个人简历：网络工程师与解决方案架构师，专注通信核心网。');
+  } catch (e) {}
+</script>
+
+<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true">
+  <span class="aurora__a"></span>
+  <span class="aurora__b"></span>
+  <span class="aurora__c"></span>
+</div>
+<div class="grain" aria-hidden="true"></div>
+
+<a class="skip" href="#main"><span class="l-zh">跳到正文</span><span class="l-en">Skip to content</span></a>
+
+<header class="bar">
+  <div class="shell bar__inner">
+    <a class="brand" href="#main">
+      <span class="brand__mark" aria-hidden="true">Y</span>
+      <span class="brand__text">
+        <span class="brand__name">Yang</span>
+        <span class="brand__sub">Personal Portfolio</span>
+      </span>
+    </a>
+
+    <nav class="nav" aria-label="Sections">
+      <a href="#about"><span class="l-zh">关于</span><span class="l-en">About</span></a>
+      <a href="#education"><span class="l-zh">教育</span><span class="l-en">Education</span></a>
+      <a href="#career"><span class="l-zh">履历</span><span class="l-en">Career</span></a>
+      <a href="#projects"><span class="l-zh">项目</span><span class="l-en">Projects</span></a>
+      <a href="#skills"><span class="l-zh">技能</span><span class="l-en">Skills</span></a>
+    </nav>
+
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Language / 语言">
+        <button type="button" class="seg__btn" data-lang-set="zh" aria-pressed="true">中</button>
+        <button type="button" class="seg__btn" data-lang-set="en" aria-pressed="false">EN</button>
+      </div>
+      <button type="button" class="icon-btn" id="theme" aria-label="切换主题 / Toggle theme">
+        <svg class="icon-btn__sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 2.8v2.1M12 19.1v2.1M2.8 12h2.1M19.1 12h2.1M5.5 5.5l1.5 1.5M17 17l1.5 1.5M18.5 5.5L17 7M7 17l-1.5 1.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        <svg class="icon-btn__moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M20 14.4A8.4 8.4 0 019.6 4 8.4 8.4 0 1020 14.4z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" class="shell">
+
+  <!-- 首屏 -->
+  <section class="hero" id="about">
+    <div class="hero__main">
+      <div class="hero__top">
+        <div class="avatar">
+          <span class="avatar__initial" aria-hidden="true">Y</span>
+          <img src="assets/img/profile.jpg" alt="" width="88" height="88" onerror="this.remove()">
+        </div>
+
+        <div class="hero__id">
+          <h1 class="hero__name">Yang</h1>
+          <p class="hero__role">
+            <span class="l-zh">网络工程师 · 解决方案架构师</span>
+            <span class="l-en">Network Engineer · Solution Architect</span>
+          </p>
+        </div>
+      </div>
+
+      <p class="hero__bio">
+        <span class="l-zh">热爱动手研究前沿科技，专注于通信业核心网解决方案。</span>
+        <span class="l-en">Hands-on with emerging technology, focused on core-network solutions for telecom operators.</span>
+      </p>
+
+      <p class="status">
+        <span class="status__dot" aria-hidden="true"></span>
+        <span class="l-zh">有好机会可以考虑</span>
+        <span class="l-en">Open to a good opportunity</span>
+      </p>
+    </div>
+
+    <aside class="card info">
+      <div class="info__head">
+        <h2 class="info__title">
+          <span class="l-zh">个人信息</span>
+          <span class="l-en">Personal info</span>
+        </h2>
+        
+      </div>
+
+      <dl class="facts">
+        <div class="fact">
+          <dt><span class="l-zh">姓名</span><span class="l-en">Name</span></dt>
+          <dd><span class="l-zh">洋</span><span class="l-en">Yang</span></dd>
+        </div>
+        <div class="fact">
+          <dt><span class="l-zh">所在地</span><span class="l-en">Base</span></dt>
+          <dd><span class="l-zh">中国 · 大连</span><span class="l-en">Dalian, China</span></dd>
+        </div>
+        <div class="fact">
+          <dt><span class="l-zh">邮箱</span><span class="l-en">Email</span></dt>
+          <dd><a href="mailto:dllyiukk@gmail.com">dllyiukk@gmail.com</a></dd>
+        </div>
+        <div class="fact">
+          <dt>GitHub</dt>
+          <dd><a href="https://github.com/yangyanghoho" target="_blank" rel="noopener noreferrer">github.com/yangyanghoho</a></dd>
+        </div>
+        <div class="fact">
+          <dt><span class="l-zh">语言</span><span class="l-en">Languages</span></dt>
+          <dd><span class="l-zh">中文 / 英文</span><span class="l-en">Chinese / English</span></dd>
+        </div>
+      </dl>
+    </aside>
+  </section>
+
+  <!-- 教育 -->
+  <section class="sec" id="education">
+    <div class="sec__head">
+      <h2 class="sec__title"><span class="sec__num">01</span><span class="l-zh">教育经历</span><span class="l-en">Education</span></h2>
+      
+    </div>
+
+    <ol class="timeline">
+      <li class="entry">
+        <div class="entry__row">
+          <h3 class="entry__title"><span class="l-zh">吉林大学</span><span class="l-en">Jilin University</span></h3>
+          <span class="entry__date">2008.09 – 2011.06</span>
+        </div>
+        <p class="entry__sub"><span class="l-zh">光学 · 硕士</span><span class="l-en">Optics · Master</span></p>
+        <ul class="entry__list">
+          <li><span class="l-zh">量子光学</span><span class="l-en">Quantum optics</span></li>
+          <li><span class="l-zh">二等奖学金</span><span class="l-en">Second-level scholarship</span></li>
+        </ul>
+      </li>
+
+      <li class="entry">
+        <div class="entry__row">
+          <h3 class="entry__title"><span class="l-zh">吉林大学</span><span class="l-en">Jilin University</span></h3>
+          <span class="entry__date">2004.09 – 2008.06</span>
+        </div>
+        <p class="entry__sub"><span class="l-zh">物理学 · 学士</span><span class="l-en">Physics · Bachelor</span></p>
+        <ul class="entry__list">
+          <li><span class="l-zh">保送读研</span><span class="l-en">Admitted to graduate school without entrance exam</span></li>
+          <li><span class="l-zh">二等奖学金</span><span class="l-en">Second-level scholarship</span></li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 履历 -->
+  <section class="sec" id="career">
+    <div class="sec__head">
+      <h2 class="sec__title"><span class="sec__num">02</span><span class="l-zh">职业履历</span><span class="l-en">Career</span></h2>
+      
+    </div>
+
+    <ol class="timeline">
+      <li class="entry">
+        <div class="entry__row">
+          <h3 class="entry__title"><span class="l-zh">爱立信</span><span class="l-en">Ericsson</span></h3>
+          <span class="entry__date"><span class="l-zh">2016.08 – 至今</span><span class="l-en">2016.08 – Present</span></span>
+        </div>
+        <p class="entry__sub"><span class="l-zh">解决方案架构师</span><span class="l-en">Solution Architect</span></p>
+        <ul class="entry__list">
+          <li><span class="l-zh">网络设计与集成</span><span class="l-en">Network design and integration</span></li>
+          <li><span class="l-zh">顾问</span><span class="l-en">Consulting</span></li>
+          <li><span class="l-zh">运维</span><span class="l-en">Operations</span></li>
+        </ul>
+        <div class="tags">
+          <span class="tag">5GC</span>
+          <span class="tag">Kubernetes</span>
+          <span class="tag">EPC</span>
+          <span class="tag">TCP/IP</span>
+        </div>
+      </li>
+
+      <li class="entry">
+        <div class="entry__row">
+          <h3 class="entry__title"><span class="l-zh">其他通信企业</span><span class="l-en">Other telecom companies</span></h3>
+          <span class="entry__date">2011.07 – 2016.08</span>
+        </div>
+        <p class="entry__sub"><span class="l-zh">通信工程师</span><span class="l-en">Telecom Engineer</span></p>
+        <ul class="entry__list">
+          <li><span class="l-zh">网络设计与集成</span><span class="l-en">Network design and integration</span></li>
+          <li><span class="l-zh">顾问</span><span class="l-en">Consulting</span></li>
+          <li><span class="l-zh">运维</span><span class="l-en">Operations</span></li>
+        </ul>
+        <div class="tags">
+          <span class="tag">OpenStack</span>
+          <span class="tag">CCNA</span>
+          <span class="tag">TCP/IP</span>
+          <span class="tag">EPC</span>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 项目 -->
+  <section class="sec" id="projects">
+    <div class="sec__head">
+      <h2 class="sec__title"><span class="sec__num">03</span><span class="l-zh">项目经验</span><span class="l-en">Projects</span></h2>
+      
+    </div>
+
+    <ol class="timeline">
+      <li class="entry">
+        <div class="entry__row">
+          <h3 class="entry__title">
+            <span class="l-zh">XX 运营商 5GC 项目</span>
+            <span class="l-en">5GC project for a carrier (XX)</span>
+          </h3>
+          <span class="entry__date">2024 – 2026</span>
+        </div>
+        <p class="entry__sub"><span class="l-zh">解决方案架构师</span><span class="l-en">Solution Architect</span></p>
+        <ul class="entry__list">
+          <li><span class="l-zh">网络设计与集成</span><span class="l-en">Network design and integration</span></li>
+          <li><span class="l-zh">顾问</span><span class="l-en">Consulting</span></li>
+          <li><span class="l-zh">运维</span><span class="l-en">Operations</span></li>
+          <li><span class="l-zh">割接入网</span><span class="l-en">Cut-over and go-live</span></li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Kubernetes</span>
+          <span class="tag">5GC</span>
+          <span class="tag">EPC</span>
+          <span class="tag">TCP/IP</span>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- 技能 -->
+  <section class="sec" id="skills">
+    <div class="sec__head">
+      <h2 class="sec__title"><span class="sec__num">04</span><span class="l-zh">技术栈</span><span class="l-en">Skills</span></h2>
+      
+    </div>
+
+    <div class="skills">
+
+      <div class="card skill">
+        <h3 class="skill__name"><span class="l-zh">核心网</span><span class="l-en">Core network</span></h3>
+        <div class="bar">
+          <div class="bar__top"><span>EPC</span><span class="bar__val">90%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:90%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>5GC</span><span class="bar__val">85%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:85%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>UDM</span><span class="bar__val">50%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:50%"></div></div>
+        </div>
+      </div>
+
+      <div class="card skill">
+        <h3 class="skill__name"><span class="l-zh">开源方案</span><span class="l-en">Open source</span></h3>
+        <div class="bar">
+          <div class="bar__top"><span>Kubernetes</span><span class="bar__val">70%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:70%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>OpenStack</span><span class="bar__val">45%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:45%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>Linux</span><span class="bar__val">55%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:55%"></div></div>
+        </div>
+      </div>
+
+      <div class="card skill">
+        <h3 class="skill__name"><span class="l-zh">编程</span><span class="l-en">Coding</span></h3>
+        <div class="bar">
+          <div class="bar__top"><span>Shell</span><span class="bar__val">65%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:65%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>Python</span><span class="bar__val">45%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:45%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>Go</span><span class="bar__val">20%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:20%"></div></div>
+        </div>
+      </div>
+
+      <div class="card skill">
+        <h3 class="skill__name">TCP/IP</h3>
+        <div class="bar">
+          <div class="bar__top"><span>IP</span><span class="bar__val">50%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:50%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>HTTP</span><span class="bar__val">45%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:45%"></div></div>
+        </div>
+        <div class="bar">
+          <div class="bar__top"><span>TCP</span><span class="bar__val">30%</span></div>
+          <div class="bar__track"><div class="bar__fill" style="--w:30%"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="shell">
+    <p class="foot__line">
+      <span class="l-zh">© 2026 YangZai · 保留所有权利</span>
+      <span class="l-en">© 2026 YangZai · All rights reserved</span>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
