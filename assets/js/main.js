@@ -7,11 +7,11 @@
 
   var META = {
     zh: {
-      title: 'Yang · 网络工程师 · Binary Portfolio',
+      title: 'Yang · 网络工程师 · Personal Portfolio',
       desc: 'Yang 的个人简历：网络工程师与解决方案架构师，专注通信核心网。'
     },
     en: {
-      title: 'Yang · Network Engineer · Binary Portfolio',
+      title: 'Yang · Network Engineer · Personal Portfolio',
       desc: 'Resume of Yang, a network engineer and solution architect working on telecom core networks.'
     }
   };
